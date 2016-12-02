@@ -14,8 +14,8 @@ logo: /blog/img/logos/Project-Pages-New-Logo-Inverted.png
 
 # Tertiary Parameters
 github_username:  aissaelouafi
-project_repository: project-pages
-disqus_shortname: project-pages
+project_repository: blog
+disqus_shortname: blog
 g-analytics: UA-75881392-1
 altmetric: true
 
