@@ -1,6 +1,6 @@
 ---
 layout:     	notebook
-title:     		AirBnb First booking destination prediction
+title:     		AirBnb first booking destination prediction
 author:     	Aissa EL OUAFI
 tags:         Machine-Learning Supervised-Learning Kaggle Random-Forest
 subtitle:    	Predict Airbnb user first booking destination
