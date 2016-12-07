@@ -36,6 +36,7 @@ library(devtools)
 #### LDA / supervised LDA / LDA arch / Analyse morophologique / Analyse syntaxique / embedding anglais (word2vec)
 
 For memory issue (laptop with only 4Gb of RAM) I will analyze only first 1000 observations of each topic, it's about only <b>~10%</b> of real data ! Kaggle provide also a test dataset with 81926 observations talking about physics. Each dataframe contains 4 colmuns (id, title, content and tags column for the train data).
+
 ```{r}
 biology =  read.csv("../biology.csv",nrows =1000)
 travel = read.csv("../travel.csv",nrows=2000)
@@ -46,6 +47,7 @@ diy = read.csv("../diy.csv",nrows=1000)
 test = read.csv("../test.csv")
 #sample_submission = read.csv("../sample_submission.csv",nrows=1000)
 ```
+
 #### Explore data
 
 Lets explore the train dataset of multiple topics !
