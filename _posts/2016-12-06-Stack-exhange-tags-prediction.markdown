@@ -33,6 +33,7 @@ library(devtools)
 ```
 
 #### Import data
+
 #### LDA / supervised LDA / LDA arch / Analyse morophologique / Analyse syntaxique / embedding anglais (word2vec)
 
 For memory issue (laptop with only 4Gb of RAM) I will analyze only first 1000 observations of each topic, it's about only <b>~10%</b> of real data ! Kaggle provide also a test dataset with 81926 observations talking about physics. Each dataframe contains 4 colmuns (id, title, content and tags column for the train data).
@@ -107,6 +108,7 @@ subplot(travel_chart,biology_chart,robotic_chart,cooking_chart,crypto_chart,diy_
 ##### Title analysis
 
 Let's now calculate the tags occurrence probability of tags in the topic title.
+
 ```{r}
 titleTagsProbability <- function(df){
   title_words <- sapply(str_split(df$title," "),'[',1:max(lengths(str_split(df$title," "))))
@@ -119,6 +121,7 @@ titleTagsProbability <- function(df){
 ```
 
 We will focus now on documents title's corpus of different topics to define the coorrelation between title and tags. `generateCorpus` generate a title corpus based from `df` title's, We apply different pre-processing functions (remove punctuation, remove numbers, remove stop words ...) to generate the corpus using `tm` package.
+
 ```{r}
 generateCorpus <- function(df){
   corpus <- Corpus(VectorSource(df))
@@ -132,11 +135,14 @@ generateCorpus <- function(df){
   return(corpus)
 }
 ```
+
 Lets focus now on document title's, we will generate the title corpus of <b>Travel</b> topic.
+
 ```{r}
 travel_title_corpus <- generateCorpus(travel$title)
 ```
 Now, lets generate the `document term matrix` associated to the travel titles corpus, and show the most frequent word in this corpus.
+
 ```{r}
 dtm <- DocumentTermMatrix(travel_title_corpus)
 dtm
@@ -156,6 +162,7 @@ subplot(travel_chart,p,nrows = 1)
 
 
 We can show the <b>word cloud</b> of title corpus and compare them to <b>tags</b> frequency.
+
 ```{r}
 wordcloud(names(freq),freq,min.freq = 10)
 wordcloud((countDistinctTags(travel,40))$tags,(countDistinctTags(travel,40))$Freq)
@@ -174,6 +181,7 @@ travel_dtm
 ```
 
 We will apply the LDA using Gibbs sampling ...
+
 ```{r}
 #Define LDA parameters :
 control <- list(iter = 500)
@@ -204,6 +212,7 @@ topicProbabilities
 
 ##### LDA visualization
 Let's show the most frequent topic in the content corpus
+
 ```{r}
 topicFrequency <- as.data.frame(table(ldaOut.topics$topic))
 ```
@@ -248,6 +257,7 @@ The **tfidf** matrix generated based on only 1000 titles of travel documents con
 tfidf.pca <- prcomp(tfidf,scale. = TRUE)
 ```
 Let's study variances of the principale components, we will start by calculate the **Eigenvalues** that measure the variability retained by each PC. It's large for the first PC and small for the subsequent PCs, we will also calculate the **variance** and the **cumulative variances** of each PC.
+
 ```{r}
 eig <- (tfidf.pca$sdev)^2
 variance <- eig*100/sum(eig)
@@ -257,6 +267,7 @@ eig.dataframe
 ```
 
 Let show the importance of the first 50 principal components (PC) using a simple barplot.
+
 ```{r,fig.width=13}
 eig.dataframe <- eig.dataframe[1:50,]
 plot_ly(x = nrow(eig.dataframe):1, y = eig.dataframe$cumvariance,type="bar",name="PCs importance") %>% layout(yaxis = list(title = 'Cumulative variance'),xaxis = list(title = "Principal components"))
